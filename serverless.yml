@@ -23,7 +23,9 @@ service: handlingec2
 provider:
   name: aws
   runtime: nodejs12.x
-
+  apiGateway:
+    shouldStartNameWithService: true
+  lambdaHashingVersion: 20201221
 # you can overwrite defaults here
 # stage: dev
   region: us-east-2
