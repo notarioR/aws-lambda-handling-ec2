@@ -8,8 +8,7 @@ exports.handleEC2 = async (event, context, callback) => {
 
     if (body.action === "start"){
       return await ec2.startInstances({ InstanceIds: [body.instanceId] }).promise()
-      .then((data) => {
-        //data.StartingInstances
+      .then(() => {
         return success({body: 'Successfully started '+body.instanceId});
       });
     }

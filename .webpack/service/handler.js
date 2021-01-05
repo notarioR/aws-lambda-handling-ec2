@@ -114,8 +114,7 @@ exports.handleEC2 = async (event, context, callback) => {
     if (body.action === "start") {
       return await ec2.startInstances({
         InstanceIds: [body.instanceId]
-      }).promise().then(data => {
-        //data.StartingInstances
+      }).promise().then(() => {
         return Object(_libs_response_libs__WEBPACK_IMPORTED_MODULE_1__["success"])({
           body: 'Successfully started ' + body.instanceId
         });
