@@ -118,8 +118,12 @@ exports.handleEC2 = async (event, context, callback) => {
         return Object(_libs_response_libs__WEBPACK_IMPORTED_MODULE_1__["success"])({
           body: 'Successfully started ' + body.instanceId
         });
+      }).catch(err => {
+        return Object(_libs_response_libs__WEBPACK_IMPORTED_MODULE_1__["failure"])(err.statusCode, err.message);
       });
     }
+
+    ;
 
     if (body.action === "stop") {
       return await ec2.stopInstances({
@@ -128,16 +132,16 @@ exports.handleEC2 = async (event, context, callback) => {
         return Object(_libs_response_libs__WEBPACK_IMPORTED_MODULE_1__["success"])({
           body: 'Successfully stopped ' + body.instanceId
         });
+      }).catch(err => {
+        return Object(_libs_response_libs__WEBPACK_IMPORTED_MODULE_1__["failure"])(err.statusCode, err.message);
       });
     }
 
     return Object(_libs_response_libs__WEBPACK_IMPORTED_MODULE_1__["success"])({
-      body: 'No matching required fields'
+      body: 'No matching action required'
     });
   } catch (e) {
-    return Object(_libs_response_libs__WEBPACK_IMPORTED_MODULE_1__["failure"])({
-      body: "Something went wrong " + e
-    });
+    return Object(_libs_response_libs__WEBPACK_IMPORTED_MODULE_1__["failure"])(500, "Something went wrong");
   }
 };
 
@@ -160,8 +164,8 @@ __webpack_require__.r(__webpack_exports__);
 function success(body) {
   return buildResponse(200, body);
 }
-function failure(body) {
-  return buildResponse(500, body);
+function failure(statusCode, body) {
+  return buildResponse(statusCode, body);
 }
 
 function buildResponse(statusCode, body) {

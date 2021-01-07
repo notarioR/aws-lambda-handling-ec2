@@ -10,16 +10,20 @@ exports.handleEC2 = async (event, context, callback) => {
       return await ec2.startInstances({ InstanceIds: [body.instanceId] }).promise()
       .then(() => {
         return success({body: 'Successfully started '+body.instanceId});
+      }).catch((err) => {
+        return failure(err.statusCode, err.message);
       });
-    }
+    };
     if (body.action === "stop"){
       return await ec2.stopInstances({ InstanceIds: [body.instanceId] }).promise()
       .then(() => {
         return success({body: 'Successfully stopped '+body.instanceId});
+      }).catch((err) => {
+        return failure(err.statusCode, err.message);
       });
     }
-    return success({body: 'No matching required fields'});
+    return success({body: 'No matching action required'});
   }catch(e){
-    return failure({body: "Something went wrong "+e});
+    return failure(500, "Something went wrong");
   }
 };
