@@ -20,6 +20,6 @@ exports.handleEC2 = async (event, context, callback) => {
     }).catch((err) => {
       return failure(err.statusCode, err.message);
     });
-  }
+  };
   return success({body: 'No matching action required'});
 };
