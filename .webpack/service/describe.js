@@ -81,15 +81,15 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "../../../handler.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "../../../describe.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "../../../handler.js":
-/*!****************************************************************!*\
-  !*** /Users/notarior/Desktop/Talestech/handlingEC2/handler.js ***!
-  \****************************************************************/
+/***/ "../../../describe.js":
+/*!*****************************************************************!*\
+  !*** /Users/notarior/Desktop/Talestech/handlingEC2/describe.js ***!
+  \*****************************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -104,40 +104,27 @@ const AWS = __webpack_require__(/*! aws-sdk */ "aws-sdk");
 
 
 
-exports.handleEC2 = async (event, context, callback) => {
-  const body = JSON.parse(event.body);
+exports.main = async (event, context, callback) => {
   const ec2 = new AWS.EC2({
-    region: body.instanceRegion
+    region: "us-east-2"
   });
-
-  if (body.action === "start") {
-    return ec2.startInstances({
-      InstanceIds: [body.instanceId]
-    }).promise().then(() => {
-      return Object(_libs_response_libs__WEBPACK_IMPORTED_MODULE_1__["success"])({
-        body: 'Successfully started ' + body.instanceId
-      });
-    }).catch(err => {
-      return Object(_libs_response_libs__WEBPACK_IMPORTED_MODULE_1__["failure"])(err.statusCode, err.message);
+  var params = {
+    DryRun: false
+  };
+  var instances = [];
+  return ec2.describeInstances(params).promise().then(data => {
+    data.Reservations.map(i => instances.push({
+      "ID": i.Instances[0].InstanceId,
+      "Type": i.Instances[0].InstanceType,
+      "State": i.Instances[0].State,
+      "Tags": i.Instances[0].Tags,
+      "DNS": i.Instances[0].PublicDnsName
+    }));
+    return Object(_libs_response_libs__WEBPACK_IMPORTED_MODULE_1__["success"])({
+      body: instances
     });
-  }
-
-  ;
-
-  if (body.action === "stop") {
-    return ec2.stopInstances({
-      InstanceIds: [body.instanceId]
-    }).promise().then(() => {
-      return Object(_libs_response_libs__WEBPACK_IMPORTED_MODULE_1__["success"])({
-        body: 'Successfully stopped ' + body.instanceId
-      });
-    }).catch(err => {
-      return Object(_libs_response_libs__WEBPACK_IMPORTED_MODULE_1__["failure"])(err.statusCode, err.message);
-    });
-  }
-
-  return Object(_libs_response_libs__WEBPACK_IMPORTED_MODULE_1__["success"])({
-    body: 'No matching action required'
+  }).catch(err => {
+    return Object(_libs_response_libs__WEBPACK_IMPORTED_MODULE_1__["failure"])(err.statusCode, err.message);
   });
 };
 
@@ -3861,4 +3848,4 @@ module.exports = require("path");
 /***/ })
 
 /******/ })));
-//# sourceMappingURL=handler.js.map
+//# sourceMappingURL=describe.js.map

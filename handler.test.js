@@ -33,7 +33,6 @@ test("Stop instance successfully", async () => {
 
 test("Start instance successfully", async () => {
   const body = bodyBuilder("us-east-2", "i-039d9a031280b4ce9", "start")
-  await new Promise((r) => setTimeout(r, 2000));
   const fetching = await fetchingData(body)
   expect(fetching).toMatch(/Successfully started/);
 })

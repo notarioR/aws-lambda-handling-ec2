@@ -34,6 +34,7 @@ provider:
       Action:
         - ec2:StartInstances
         - ec2:StopInstances
+        - ec2:DescribeInstances
       Resource: "*"
 
 plugins:
@@ -73,7 +74,13 @@ functions:
     handler: handler.handleEC2
     events:
       - http:
-          path: handleEC2
+          path: handle
+          method: post
+  describeEC2:
+    handler: describe.main
+    events:
+      - http:
+          path: describe
           method: post
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
