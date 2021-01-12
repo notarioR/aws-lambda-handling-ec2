@@ -19,7 +19,7 @@ exports.main = async (event, context, callback) => {
           "State" : i.Instances[0].State,
           "Tags"  : i.Instances[0].Tags,
           "DNS"   : i.Instances[0].PublicDnsName
-        })
+        }),
       );
       return success({body: instances});
     })

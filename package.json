@@ -1,9 +1,10 @@
 {
-  "name": "handlingEc2",
+  "name": "handling-ec2",
   "version": "1.0.0",
   "description": "handle EC2 instance, starting and shutting down them",
   "main": "handler.js",
   "scripts": {
+    "start": "http-server -c-1 -o -p 8080 ./frontend",
     "test": "serverless-bundle test"
   },
   "keywords": [

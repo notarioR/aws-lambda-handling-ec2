@@ -1,10 +1,10 @@
+# Handle EC2 instances, starting and shutting down them
+
+# Usage
+
+1. Serverless deploy
+2. Make a post request to the endpoint to get the state and basic information of your hosted instances by region.
+3. Stop/Start them whenever you need it.
+4. You can use the quick frontend running npm start or make a quick curl request to the endpoints.
+
 # aws-lambda-handling-ec2
-handle EC2 instance, starting and shutting down them
-
-POST request to start/stop instances:
-
-{
-  "instanceRegion": "us-east-2",
-  "instanceId": "i-03xxxxxx",
-  "action": "start" 
-}
